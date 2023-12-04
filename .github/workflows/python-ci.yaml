@@ -1,0 +1,27 @@
+name: Python CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11.x
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Check code formatting
+        run: black . --check
+      
+      - name: Static Analysis
+        run: flake8
+
+      - name: Run Tests
+        run: python -m unittest discover -s tests
+
