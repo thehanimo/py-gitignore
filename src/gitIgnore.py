@@ -1,14 +1,8 @@
 import os
 import re
-import fnmatch
 
 
 class Glob:
-    """
-    The Glob class represents a single glob pattern in a .gitignore file.
-    It is responsible for converting the glob pattern into a regular expression
-    and matching file paths against this regular expression.
-    """
 
     def __init__(self, pattern, base_path, is_negated=False):
         self.is_negated = is_negated
@@ -49,10 +43,6 @@ class Glob:
 
 
 class Gitignore:
-    """
-    The Gitignore class represents a .gitignore file.
-    It is responsible for reading the .gitignore file and creating Glob objects for each non-comment line.
-    """
 
     def __init__(self, file_path):
         self.path = file_path
@@ -78,10 +68,6 @@ class Gitignore:
 
 
 class GitignoreBuilder:
-    """
-    The GitignoreBuilder class is responsible for creating a GitignoreMatcher object.
-    It allows adding multiple .gitignore files which will all be used when matching file paths.
-    """
 
     def __init__(self, root_dir):
         self.root_dir = root_dir
@@ -95,10 +81,6 @@ class GitignoreBuilder:
 
 
 class GitignoreMatcher:
-    """
-    The GitignoreMatcher class is responsible for matching file paths against all added .gitignore files.
-    It uses the Glob objects created by the Gitignore objects to match file paths.
-    """
 
     def __init__(self, gitignores):
         self.gitignores = gitignores
