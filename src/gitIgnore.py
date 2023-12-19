@@ -3,35 +3,27 @@ import re
 
 
 class Glob:
-
     def __init__(self, pattern, base_path, is_negated=False):
         self.is_negated = is_negated
         self.base_path = base_path
         self.regex = self._create_regex_from_gitignore_pattern(pattern)
 
     def _create_regex_from_gitignore_pattern(self, pattern):
-        # Handle negated patterns
         if pattern.startswith("!"):
             pattern = pattern[1:]
 
-        # Handle directory specific patterns
         directory_specific = pattern.endswith("/")
         if directory_specific:
             pattern = pattern[:-1]
 
-        # Escape special regex characters
         pattern = re.escape(pattern)
-
-        # Replace gitignore wildcards with regex equivalents
         pattern = pattern.replace(r"\*\*", ".*")  # '**' -> '.*'
         pattern = pattern.replace(r"\*", "[^/]*")  # '*' -> '[^/]*'
         pattern = pattern.replace(r"\?", ".")  # '?' -> '.'
 
-        # Adjust directory specific patterns
         if directory_specific:
             pattern += r"(/.*)?"
 
-        # Convert pattern to match from the base directory
         if not pattern.startswith(".*"):
             pattern = "^" + os.path.join(re.escape(self.base_path), pattern)
 
@@ -43,7 +35,6 @@ class Glob:
 
 
 class Gitignore:
-
     def __init__(self, file_path):
         self.path = file_path
         self.globs = []
@@ -58,9 +49,7 @@ class Gitignore:
                         is_negated = line.startswith("!")
                         if is_negated:
                             line = line[1:]
-                        self.globs.append(
-                            Glob(line, os.path.dirname(self.path), is_negated)
-                        )
+                        self.globs.append(Glob(line, os.path.dirname(self.path), is_negated))
         else:
             raise FileNotFoundError(
                 f"The file {self.path} does not exist or is not readable."
@@ -68,7 +57,6 @@ class Gitignore:
 
 
 class GitignoreBuilder:
-
     def __init__(self, root_dir):
         self.root_dir = root_dir
         self.gitignores = []
@@ -81,7 +69,6 @@ class GitignoreBuilder:
 
 
 class GitignoreMatcher:
-
     def __init__(self, gitignores):
         self.gitignores = gitignores
 
@@ -98,17 +85,14 @@ class GitignoreMatcher:
         return [self.match(path) for path in multiple_paths]
 
 
-# Example usage
 if __name__ == "__main__":
     root_directory = os.getcwd()
     path_to_gitignore_file = os.path.join(root_directory, ".gitTest")
     builder = GitignoreBuilder(root_directory)
     builder.add(path_to_gitignore_file)
-    # Add more .gitignore files if necessary
 
     matcher = builder.build()
 
-    # Test with a single file
     path_to_file = os.path.join(root_directory, "README.MD")
     print(matcher.match(path_to_file))
 
