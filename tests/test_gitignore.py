@@ -1,6 +1,6 @@
 import unittest
 import os
-from src.gitIgnore import GitignoreMatcher, GitignoreBuilder  # Replace with your actual module name
+from src import GitignoreBuilder
 
 class TestGitignoreMatcher(unittest.TestCase):
     @classmethod
