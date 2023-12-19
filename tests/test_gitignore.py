@@ -1,6 +1,6 @@
 import unittest
 import os
-from Gitignore_Matcher.Gitignore import read_gitignore
+from src import GitignoreBuilder
 
 class TestGitignore(unittest.TestCase):
     def setUp(self):
@@ -58,6 +58,14 @@ class TestGitignore(unittest.TestCase):
         self.assertGitignoreMatch("/file_root_33", False)
         self.assertGitignoreMatch("/file_root_33/file_leaf", True)
         self.assertGitignoreMatch("/file_root_33/nested_dir/file_leaf", True)
+
+        self.assertGitignoreMatch("subdir/file_subdir_00", True)
+        self.assertGitignoreMatch("subdir/file_subdir_01", False)
+        self.assertGitignoreMatch("subdir/file_subdir_02", False)
+        self.assertGitignoreMatch("subdir/file_subdir_02/file_leaf", True)
+        self.assertGitignoreMatch("subdir/file_subdir_03", False)
+        self.assertGitignoreMatch("subdir/file_subdir_03/file_leaf", True)
+        self.assertGitignoreMatch("subdir/file_subdir_03/nested_dir/file_leaf", True)
         
 
 if __name__ == "__main__":
