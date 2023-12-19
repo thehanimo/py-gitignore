@@ -1,15 +1,29 @@
-import os
+#Run it this way in CLI: python gitignore.py c:/Users/Anil/Downloads/x/Gitignore_Test
 
+import os
+import sys
 
 gitignore_Paths = []
 all_Paths = []
 all_Files = []
 matches = []
 
+args = sys.argv
 
-root = "C:/Users/Anil/OneDrive/Desktop/Gitignore_Test"  # Root directory
-f = open(root + "/.gitignore", "r")  # Gitignore file
+#root = "c:/Users/Anil/Downloads/x/Gitignore_Test"  # Root directory
+try:
+    root = args[1]
+except IndexError:
+    print("No argument given.")
+    exit(1)
 
+try:
+    f = open(root + "/.gitignore", "r")  # Gitignore file
+except FileNotFoundError:
+    print("Can't find file.")
+    exit(1)
+
+count = 0
 for count, line in enumerate(f):
     pass
 count = count + 1  # Gets the number of lines in the Gitignore file
@@ -49,4 +63,4 @@ for i in range(len(all_Files)):  # Finds the matches
         matches.append(all_Paths[i])
 
 
-matches
+print(matches)
