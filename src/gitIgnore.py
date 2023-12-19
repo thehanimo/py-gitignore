@@ -13,8 +13,6 @@ class Glob:
             pattern = pattern[1:]
 
         directory_specific = pattern.endswith("/")
-        if directory_specific:
-            pattern = pattern[:-1]
 
         pattern = re.escape(pattern)
         pattern = pattern.replace(r"\*\*", ".*")  # '**' -> '.*'
@@ -22,7 +20,7 @@ class Glob:
         pattern = pattern.replace(r"\?", ".")  # '?' -> '.'
 
         if directory_specific:
-            pattern += r"(/.*)?"
+            pattern += r"(.*)?"
 
         if not pattern.startswith(".*"):
             pattern = "^" + os.path.join(re.escape(self.base_path), pattern)
