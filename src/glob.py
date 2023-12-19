@@ -1,6 +1,7 @@
 import re
 import os
 
+
 class Glob:
     def __init__(self, pattern, base_path, is_negated=False):
         self.is_negated = is_negated

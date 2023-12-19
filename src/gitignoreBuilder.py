@@ -1,6 +1,7 @@
 from .gitignore import Gitignore
 from .gitignoreMatcher import GitignoreMatcher
 
+
 class GitignoreBuilder:
     def __init__(self, root_dir):
         self.root_dir = root_dir

@@ -1,5 +1,6 @@
 import os
 
+
 class GitignoreMatcher:
     def __init__(self, gitignores):
         self.gitignores = gitignores
