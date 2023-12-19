@@ -11,7 +11,8 @@ matches = []
 
 args = sys.argv
 
-#root = "c:/Users/Anil/Downloads/x/Gitignore_Test"  # Root directory
+# root = "c:/Users/Anil/Downloads/x/Gitignore_Test"  # Root directory
+
 try:
     root = args[1]
 except IndexError:
