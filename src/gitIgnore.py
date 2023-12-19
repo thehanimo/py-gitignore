@@ -77,6 +77,7 @@ class GitignoreMatcher:
         normalized_path = os.path.normpath(path_to_file)
         for gitignore in self.gitignores:
             for glob in gitignore.globs:
+                print(f"Testing glob: {glob.regex.pattern}, path: {normalized_path}")
                 if glob.matches(normalized_path):
                     return not glob.is_negated
         return False
@@ -88,8 +89,7 @@ class GitignoreMatcher:
 # Example usage
 if __name__ == "__main__":
     root_directory = os.getcwd()
-    path_to_gitignore_file = os.path.join(root_directory, ".gitignoreTest")
-
+    path_to_gitignore_file = os.path.join(root_directory, ".gitTest")
     builder = GitignoreBuilder(root_directory)
     builder.add(path_to_gitignore_file)
     # Add more .gitignore files if necessary
@@ -97,8 +97,9 @@ if __name__ == "__main__":
     matcher = builder.build()
 
     # Test with a single file
-    path_to_file = os.path.join(root_directory, "tests/test_hello.py")
+    path_to_file = os.path.join(root_directory, "README.MD")
     print(matcher.match(path_to_file))
 
     path_to_file = os.path.join(root_directory, "Gitignore_Matcher/Gitignore.py")
     print(matcher.match(path_to_file))
+    print(path_to_file)
