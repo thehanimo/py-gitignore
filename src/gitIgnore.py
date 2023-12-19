@@ -3,6 +3,12 @@ import re
 import fnmatch
 
 class Glob:
+    """
+    The Glob class represents a single glob pattern in a .gitignore file.
+    It is responsible for converting the glob pattern into a regular expression
+    and matching file paths against this regular expression.
+    """
+
     def __init__(self, pattern, base_path, is_negated=False):
         self.is_negated = is_negated
         self.base_path = base_path
@@ -41,12 +47,18 @@ class Glob:
         return self.regex.match(normalized_path) is not None
     
 class Gitignore:
+    """
+    The Gitignore class represents a .gitignore file.
+    It is responsible for reading the .gitignore file and creating Glob objects for each non-comment line.
+    """
+
     def __init__(self, file_path):
         self.path = file_path
         self.globs = []
         self._load_globs()
 
     def _load_globs(self):
+    if os.path.exists(self.path) and os.access(self.path, os.R_OK):
         with open(self.path, 'r') as file:
             for line in file:
                 line = line.strip()
@@ -55,9 +67,16 @@ class Gitignore:
                     if is_negated:
                         line = line[1:]
                     self.globs.append(Glob(line, os.path.dirname(self.path), is_negated))
+    else:
+        raise FileNotFoundError(f"The file {self.path} does not exist or is not readable.")
 
 
 class GitignoreBuilder:
+    """
+    The GitignoreBuilder class is responsible for creating a GitignoreMatcher object.
+    It allows adding multiple .gitignore files which will all be used when matching file paths.
+    """
+
     def __init__(self, root_dir):
         self.root_dir = root_dir
         self.gitignores = []
@@ -70,6 +89,11 @@ class GitignoreBuilder:
 
 
 class GitignoreMatcher:
+    """
+    The GitignoreMatcher class is responsible for matching file paths against all added .gitignore files.
+    It uses the Glob objects created by the Gitignore objects to match file paths.
+    """
+
     def __init__(self, gitignores):
         self.gitignores = gitignores
 
