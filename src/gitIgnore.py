@@ -2,6 +2,7 @@ import os
 import re
 import fnmatch
 
+
 class Glob:
     """
     The Glob class represents a single glob pattern in a .gitignore file.
@@ -16,11 +17,11 @@ class Glob:
 
     def _create_regex_from_gitignore_pattern(self, pattern):
         # Handle negated patterns
-        if pattern.startswith('!'):
+        if pattern.startswith("!"):
             pattern = pattern[1:]
 
         # Handle directory specific patterns
-        directory_specific = pattern.endswith('/')
+        directory_specific = pattern.endswith("/")
         if directory_specific:
             pattern = pattern[:-1]
 
@@ -28,24 +29,25 @@ class Glob:
         pattern = re.escape(pattern)
 
         # Replace gitignore wildcards with regex equivalents
-        pattern = pattern.replace(r'\*\*', '.*')  # '**' -> '.*'
-        pattern = pattern.replace(r'\*', '[^/]*')  # '*' -> '[^/]*'
-        pattern = pattern.replace(r'\?', '.')      # '?' -> '.'
+        pattern = pattern.replace(r"\*\*", ".*")  # '**' -> '.*'
+        pattern = pattern.replace(r"\*", "[^/]*")  # '*' -> '[^/]*'
+        pattern = pattern.replace(r"\?", ".")  # '?' -> '.'
 
         # Adjust directory specific patterns
         if directory_specific:
-            pattern += r'(/.*)?'
+            pattern += r"(/.*)?"
 
         # Convert pattern to match from the base directory
-        if not pattern.startswith('.*'):
-            pattern = '^' + os.path.join(re.escape(self.base_path), pattern)
+        if not pattern.startswith(".*"):
+            pattern = "^" + os.path.join(re.escape(self.base_path), pattern)
 
         return re.compile(pattern)
 
     def matches(self, path):
         normalized_path = os.path.normpath(path)
         return self.regex.match(normalized_path) is not None
-    
+
+
 class Gitignore:
     """
     The Gitignore class represents a .gitignore file.
@@ -59,16 +61,21 @@ class Gitignore:
 
     def _load_globs(self):
         if os.path.exists(self.path) and os.access(self.path, os.R_OK):
-            with open(self.path, 'r') as file:
+            with open(self.path, "r") as file:
                 for line in file:
                     line = line.strip()
-                    if line and not line.startswith('#'):
-                        is_negated = line.startswith('!')
+                    if line and not line.startswith("#"):
+                        is_negated = line.startswith("!")
                         if is_negated:
                             line = line[1:]
-                        self.globs.append(Glob(line, os.path.dirname(self.path), is_negated))
+                        self.globs.append(
+                            Glob(line, os.path.dirname(self.path), is_negated)
+                        )
         else:
-            raise FileNotFoundError(f"The file {self.path} does not exist or is not readable.")
+            raise FileNotFoundError(
+                f"The file {self.path} does not exist or is not readable."
+            )
+
 
 class GitignoreBuilder:
     """
