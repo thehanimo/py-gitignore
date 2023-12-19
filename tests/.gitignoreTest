@@ -56,6 +56,17 @@ file_root_03/**
 
 
 ### file in sub-dir
+**/subdir/file_subdir_00
+
+# NO_MATCH
+**/subdir/file_subdir_01/
+
+# NO_MATCH
+**/subdir/file_subdir_02/*
+
+# NO_MATCH
+**/subdir/file_subdir_03/**
+
 
 # MATCH /parent_dir/file_deep_1
 file_deep_00
