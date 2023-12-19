@@ -28,6 +28,18 @@ class TestGitignoreMatcher(unittest.TestCase):
         # Example test for files in root with debugging
         self.assertGitignoreMatch("README.MD", True)
         self.assertGitignoreMatch("file_root_01", False)
+    
+    def test_files_in_subdirectories(self):
+        self.assertGitignoreMatch("src/gitIgnore.py", False)
+        self.assertGitignoreMatch("tests/.gitignoreTest", True)
+
+    def test_directories(self):
+        self.assertGitignoreMatch("src", False)
+        self.assertGitignoreMatch("tests", False)
+
+    def test_negated_patterns(self):
+        self.assertGitignoreMatch("src/.venv", True)
+        self.assertGitignoreMatch("src/venv", True)
 
 if __name__ == "__main__":
     unittest.main()
