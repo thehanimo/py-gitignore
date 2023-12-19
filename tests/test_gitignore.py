@@ -20,32 +20,10 @@ class TestGitignore(unittest.TestCase):
 
         os.makedirs(os.path.join(self.root, "folder"))
 
-    def test_read_gitignore(self):
-        # Test the read_gitignore function
-        gitignore_paths, all_paths, matches = read_gitignore(self.root)
-
-        # Expected values based on the test directory structure
-        expected_gitignore_paths = ["file1.txt", "file2.txt", "folder/"]
-        expected_all_paths = [
-            os.path.join(self.root, "file1.txt"),
-            os.path.join(self.root, "file2.txt"),
-            os.path.join(self.root, "folder"),
-        ]
-        expected_matches = [
-            os.path.join(self.root, "file1.txt"),
-            os.path.join(self.root, "file2.txt"),
-            os.path.join(self.root, "folder"),
-        ]
-
-        self.assertEqual(gitignore_paths, expected_gitignore_paths)
-        self.assertEqual(all_paths, expected_all_paths)
-        self.assertEqual(matches, expected_matches)
-
-    def tearDown(self):
-        # Remove the temporary test directory and files
-        import shutil
-
-        shutil.rmtree(self.root, ignore_errors=True)
+    def test_files_in_root(self):
+        # Example test for files in root with debugging
+        self.assertGitignoreMatch("README.MD", True)
+        self.assertGitignoreMatch("file_root_01", False)
 
 if __name__ == "__main__":
     unittest.main()
