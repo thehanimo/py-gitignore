@@ -49,7 +49,9 @@ class Gitignore:
                         is_negated = line.startswith("!")
                         if is_negated:
                             line = line[1:]
-                        self.globs.append(Glob(line, os.path.dirname(self.path), is_negated))
+                        self.globs.append(
+                            Glob(line, os.path.dirname(self.path), is_negated)
+                        )
         else:
             raise FileNotFoundError(
                 f"The file {self.path} does not exist or is not readable."
