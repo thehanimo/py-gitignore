@@ -1,4 +1,5 @@
-#Run it this way in CLI: python gitignore.py c:/Users/Anil/Downloads/x/Gitignore_Test
+# Run it this way in CLI: python gitignore.py c:/Users/Anil/Downloads/x/Gitignore_Test
+
 
 import os
 import sys
