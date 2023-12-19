@@ -19,15 +19,46 @@ class TestGitignoreMatcher(unittest.TestCase):
         return builder.build()
 
     def assertGitignoreMatch(self, path, expected):
-        full_path = os.path.join(os.getcwd(), path)  # Adjust 'ROOT' if needed
+        full_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), path)  # Adjust 'ROOT' if needed
         result = self.matcher.match(full_path)
         print(f"Testing path: {full_path}, Expected: {expected}, Actual: {result}")
         self.assertEqual(result, expected)
+        
 
     def test_files_in_root(self):
-        # Example test for files in root with debugging
         self.assertGitignoreMatch("README.MD", True)
+        self.assertGitignoreMatch("file_root_00", True)
         self.assertGitignoreMatch("file_root_01", False)
+        self.assertGitignoreMatch("file_root_02", False)
+        self.assertGitignoreMatch("file_root_02/file_leaf", True)
+        self.assertGitignoreMatch("file_root_03", False)
+        self.assertGitignoreMatch("file_root_03/file_leaf", True)
+        self.assertGitignoreMatch("file_root_03/nested_dir/file_leaf", True)
+
+        self.assertGitignoreMatch("/file_root_10", True)
+        self.assertGitignoreMatch("/file_root_11", False)
+        self.assertGitignoreMatch("/file_root_12", False)
+        self.assertGitignoreMatch("/file_root_12/file_leaf", True)
+        self.assertGitignoreMatch("/file_root_13", False)
+        self.assertGitignoreMatch("/file_root_13/file_leaf", True)
+        self.assertGitignoreMatch("/file_root_13/nested_dir/file_leaf", True)
+
+        self.assertGitignoreMatch("/file_root_20", False)
+        self.assertGitignoreMatch("/file_root_21", False)
+        self.assertGitignoreMatch("/file_root_22", False)
+        self.assertGitignoreMatch("/file_root_22/file_leaf", False)
+        self.assertGitignoreMatch("/file_root_23", False)
+        self.assertGitignoreMatch("/file_root_23/file_leaf", False)
+        self.assertGitignoreMatch("/file_root_23/nested_dir/file_leaf", False)
+
+        self.assertGitignoreMatch("/file_root_30", True)
+        self.assertGitignoreMatch("/file_root_31", False)
+        self.assertGitignoreMatch("/file_root_32", False)
+        self.assertGitignoreMatch("/file_root_32/file_leaf", True)
+        self.assertGitignoreMatch("/file_root_33", False)
+        self.assertGitignoreMatch("/file_root_33/file_leaf", True)
+        self.assertGitignoreMatch("/file_root_33/nested_dir/file_leaf", True)
+        
 
 if __name__ == "__main__":
     unittest.main()

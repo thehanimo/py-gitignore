@@ -2,7 +2,8 @@
 
 ### file in root
 README.MD
-<!-- # MATCH /file_root_1
+
+# MATCH /file_root_1
 file_root_00
 
 # NO_MATCH
