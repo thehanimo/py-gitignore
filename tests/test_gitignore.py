@@ -1,46 +1,51 @@
 import unittest
 import os
-from src.gitIgnore import GitignoreMatcher, GitignoreBuilder  # Replace with your actual module name
+from Gitignore_Matcher.Gitignore import read_gitignore
 
-class TestGitignoreMatcher(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        # Assuming the .gitignore file is in the root directory of your project
-        root_directory = os.path.dirname(os.path.abspath(__file__))  # Adjust this as needed
-        gitignore_file_path = os.path.join(root_directory, '.gitignoreTest')  # Path to your .gitignore file
+class TestGitignore(unittest.TestCase):
+    def setUp(self):
+        # Create a temporary test directory structure for testing
+        self.root = os.path.abspath(os.path.join(os.path.dirname(__file__), "test_dir"))
+        os.makedirs(self.root, exist_ok=True)
 
-        # Initialize the GitignoreMatcher with the .gitignore file
-        cls.matcher = cls.create_gitignore_matcher(gitignore_file_path, os.getcwd())
+        # Create a dummy .gitignore file for testing purposes
+        gitignore_path = os.path.join(self.root, ".gitignore")
+        with open(gitignore_path, "w") as f:
+            f.write("file1.txt\nfile2.txt\nfolder/\n")
 
-    @classmethod
-    def create_gitignore_matcher(cls, file_path, root_dir):
-        builder = GitignoreBuilder(os.getcwd())
-        builder.add(file_path)
-        return builder.build()
+        # Create some test files and directories
+        test_files = ["file1.txt", "file2.txt"]
+        for file in test_files:
+            open(os.path.join(self.root, file), "w").close()
 
-    def assertGitignoreMatch(self, path, expected):
-        full_path = os.path.join(os.getcwd(), path)  # Adjust 'ROOT' if needed
-        result = self.matcher.match(full_path)
-        print(f"Testing path: {full_path}, Expected: {expected}, Actual: {result}")
-        self.assertEqual(result, expected)
+        os.makedirs(os.path.join(self.root, "folder"))
 
-    def test_files_in_root(self):
-        # Example test for files in root with debugging
-        self.assertGitignoreMatch("README.MD", True)
-        self.assertGitignoreMatch("file_root_01", False)
-    
-    def test_files_in_subdirectories(self):
-        self.assertGitignoreMatch("src/gitIgnore.py", False)
-        self.assertGitignoreMatch("tests/.gitignoreTest", True)
+    def test_read_gitignore(self):
+        # Test the read_gitignore function
+        gitignore_paths, all_paths, matches = read_gitignore(self.root)
 
-    def test_directories(self):
-        self.assertGitignoreMatch("src", False)
-        self.assertGitignoreMatch("tests", False)
+        # Expected values based on the test directory structure
+        expected_gitignore_paths = ["file1.txt", "file2.txt", "folder/"]
+        expected_all_paths = [
+            os.path.join(self.root, "file1.txt"),
+            os.path.join(self.root, "file2.txt"),
+            os.path.join(self.root, "folder"),
+        ]
+        expected_matches = [
+            os.path.join(self.root, "file1.txt"),
+            os.path.join(self.root, "file2.txt"),
+            os.path.join(self.root, "folder"),
+        ]
 
-    def test_negated_patterns(self):
-        self.assertGitignoreMatch("src/.venv", True)
-        self.assertGitignoreMatch("src/venv", True)
+        self.assertEqual(gitignore_paths, expected_gitignore_paths)
+        self.assertEqual(all_paths, expected_all_paths)
+        self.assertEqual(matches, expected_matches)
+
+    def tearDown(self):
+        # Remove the temporary test directory and files
+        import shutil
+
+        shutil.rmtree(self.root, ignore_errors=True)
 
 if __name__ == "__main__":
     unittest.main()
-
