@@ -66,6 +66,16 @@ class TestGitignoreMatcher(unittest.TestCase):
         self.assertGitignoreMatch("subdir/file_subdir_03", False)
         self.assertGitignoreMatch("subdir/file_subdir_03/file_leaf", True)
         self.assertGitignoreMatch("subdir/file_subdir_03/nested_dir/file_leaf", True)
+    
+    def test_different_file_types(self):
+        # Test for a Python file
+        self.assertGitignoreMatch("example.py", False)
+        
+        # Test for a text file
+        self.assertGitignoreMatch("example.txt", False)
+        
+        # Test for a configuration file
+        self.assertGitignoreMatch("config.ini", False)
         
 
 if __name__ == "__main__":
