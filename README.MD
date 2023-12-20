@@ -1,6 +1,8 @@
-# Python Template  Repository
+Python Gitignore Matcher
+======
+[![Build status](https://github.com/thehanimo/py-gitignore/workflows/ci/badge.svg)](https://github.com/thehanimo/py-gitignore/actions)
 
-This is a template repository for Python projects that provides a starting point for designing and developing Python applications. It includes a basic project structure, configuration for continuous integration, static analysis, code formatting, and more. You can use this template as a foundation for your Python projects.
+A python implementation of a gitignore file path matcher. Based on a .gitignore file, the matcher will output a match if the path is to be ignored. Can be used along with a walker or any directory explorer for ignoring files. Follows the gitignore file path conventions. Based off the [RipGrep gitignore implementation](https://github.com/BurntSushi/ripgrep/tree/master/crates/ignore)
 
 ## Features
 
@@ -13,52 +15,40 @@ This is a template repository for Python projects that provides a starting point
 - **Package Manager**: pip
 - **License**: MIT License
 
-## Getting Started
+## Usage
 
-To use this template for your Python project, follow these steps:
+First, create the builder for adding .gitignore files
 
-1. **Fork this repository**: Click the "Fork" button at the top right of this page to create a copy of this template repository in your GitHub account.
+~~~
+builder = Gitignorebuilder(DIRECTORY_ROOT) # add your root for the project
+builder.add(GITIGNORE FILE PATH) # add your filepath to the gitignore file
+~~~
 
-2. **Clone your fork**: Use `git clone` to clone the repository to your local machine:
+Then, you can create the matcher. After this, you can pass any path and it will return a Boolean indicating if its ignored.
 
-   ```sh
-   git clone https://github.com/kimonk0299/python-template.git
-   ```
+~~~
+matcher = builder.build()
+return matcher.match(TEST PATH)
+~~~
 
+## Example
 
-3. **Set up virtual environment**: 
-   ```sh
-   python -m venv .venv
-   source .venv/bin/activate
-   ```
+Say im walking through a directory and want to only look at files that arent supposed to be ignored.
 
+~~~
+for root, _, files in os.walk(directory):     
+        for file in files:
+            filepath = os.path.join(root, file)
+            if not matcher.match(filepath):
+                # Apply the test function if matcher returns False
+                test_function(filepath)
+            # If matcher returns True, the file is ignored
+~~~
 
-4. **Install Dependencies**:
-   ```sh
-   pip install -r requirements.txt
-   ```
+### Unit testing
+```sh
+python -m unittest tests/test_gitignore.py
+```
 
-
-5. **Add your files to `src/` and unit tests to `tests/`**
-
-6. **Format code**:
-   ```sh
-   black .
-   ```
-
-
-7. **Run static analysis**:
-   ```sh
-   flake8
-   ```
-
-
-8. **Run tests**:
-   ```sh
-   python -m unittest discover -s tests
-   ```
-
-
-9. **Push code on GitHub to run CI tests on GitHub Actions**
 
 
