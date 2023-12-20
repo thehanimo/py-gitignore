@@ -77,6 +77,14 @@ class TestGitignoreMatcher(unittest.TestCase):
         # Test for a configuration file
         self.assertGitignoreMatch("config.ini", False)
         
+    def test_edge_cases(self):
+        # Test for an empty file (if applicable)
+        self.assertGitignoreMatch("empty_file.txt", False)
+        
+        # Test for a non-existent file
+        self.assertGitignoreMatch("nonexistent_file.txt", False)
+
+        
 
 if __name__ == "__main__":
     unittest.main()
