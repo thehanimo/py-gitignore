@@ -1,6 +1,6 @@
 Python Gitignore Matcher
 ======
-![Build status(https://github.com/thehanimo/py-gitignore/actions/workflows/python-ci.yaml/badge.svg)]
+[![Build status](https://github.com/thehanimo/py-gitignore/actions/workflows/python-ci.yaml/badge.svg)]
 
 A python implementation of a gitignore file path matcher. Based on a .gitignore file, the matcher will output a match if the path is to be ignored. Can be used along with a walker or any directory explorer for ignoring files. Follows the gitignore file path conventions. Based off the [RipGrep gitignore implementation](https://github.com/BurntSushi/ripgrep/tree/master/crates/ignore)
 
