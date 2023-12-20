@@ -2,21 +2,21 @@ import unittest
 import os
 from src import GitignoreBuilder
 
-class TestGitignore(unittest.TestCase):
-    def setUp(self):
-        # Create a temporary test directory structure for testing
-        self.root = os.path.abspath(os.path.join(os.path.dirname(__file__), "test_dir"))
-        os.makedirs(self.root, exist_ok=True)
+class TestGitignoreMatcher(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        # Assuming the .gitignore file is in the root directory of your project
+        root_directory = os.path.dirname(os.path.abspath(__file__))  # Adjust this as needed
+        gitignore_file_path = os.path.join(root_directory, '.gitignoreTest')  # Path to your .gitignore file
 
-        # Create a dummy .gitignore file for testing purposes
-        gitignore_path = os.path.join(self.root, ".gitignore")
-        with open(gitignore_path, "w") as f:
-            f.write("file1.txt\nfile2.txt\nfolder/\n")
+        # Initialize the GitignoreMatcher with the .gitignore file
+        cls.matcher = cls.create_gitignore_matcher(gitignore_file_path, os.getcwd())
 
-        # Create some test files and directories
-        test_files = ["file1.txt", "file2.txt"]
-        for file in test_files:
-            open(os.path.join(self.root, file), "w").close()
+    @classmethod
+    def create_gitignore_matcher(cls, file_path, root_dir):
+        builder = GitignoreBuilder(os.getcwd())
+        builder.add(file_path)
+        return builder.build()
 
     def assertGitignoreMatch(self, path, expected):
         full_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), path)  # Adjust 'ROOT' if needed
@@ -70,3 +70,4 @@ class TestGitignore(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
