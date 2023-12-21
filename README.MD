@@ -57,7 +57,7 @@ for root, _, files in os.walk(directory):
 
 ## Development
 
-1. **Clone your fork**: Use `git clone` to clone the repository to your local machine:
+1. **Clone the repo**: Use `git clone` to clone the repository to your local machine:
 
    ```sh
    git clone https://github.com/thehanimo/py-gitignore
