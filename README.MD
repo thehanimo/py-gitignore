@@ -14,13 +14,14 @@ A python implementation of a gitignore file path matcher. Based on a .gitignore 
 - **Package Manager**: pip
 - **License**: MIT License
 
+## Installation
+```sh
+pip install py_gitignore_2
+```
+
 ## Usage
 
-First, install the package using pip
-
-`pip install py_gitignore_2`
-
-Then, create the builder for adding .gitignore files
+First, create the builder for adding .gitignore files
 
 ~~~
 from py_gitignore_2 import GitignoreBuilder
