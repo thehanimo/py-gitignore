@@ -1,6 +1,5 @@
-Python Gitignore Matcher
+Python Gitignore Matcher ![Build status](https://github.com/thehanimo/py-gitignore/actions/workflows/python-ci.yaml/badge.svg)
 ======
-[![Build status](https://github.com/thehanimo/py-gitignore/actions/workflows/python-ci.yaml/badge.svg)]
 
 A python implementation of a gitignore file path matcher. Based on a .gitignore file, the matcher will output a match if the path is to be ignored. Can be used along with a walker or any directory explorer for ignoring files. Follows the gitignore file path conventions. Based off the [RipGrep gitignore implementation](https://github.com/BurntSushi/ripgrep/tree/master/crates/ignore)
 
@@ -53,14 +52,51 @@ for root, _, files in os.walk(directory):
 
 
 
-### Development
-### Unit Testing
+## Development
 
-```sh
-python -m unittest tests/test_gitignore.py
-```
+1. **Clone your fork**: Use `git clone` to clone the repository to your local machine:
 
-### CONTRIBUTING
+   ```sh
+   git clone https://github.com/thehanimo/py-gitignore
+   ```
+
+
+2. **Set up virtual environment**: 
+   ```sh
+   python -m venv .venv
+   source .venv/bin/activate
+   ```
+
+
+3. **Install Dependencies**:
+   ```sh
+   pip install -r requirements.txt
+   ```
+
+
+4. **Add your files to `src/py_gitignore_2` and unit tests to `tests/`**
+
+5. **Format code**:
+   ```sh
+   black .
+   ```
+
+
+6. **Run static analysis**:
+   ```sh
+   flake8
+   ```
+
+
+7. **Run tests**:
+   ```sh
+   python -m unittest discover -s tests
+   ```
+
+
+8. **Push code on GitHub to run CI tests on GitHub Actions**
+
+## CONTRIBUTING
 Read [CONTRIBUTING](https://github.com/thehanimo/py-gitignore/blob/main/CONTRIBUTING)
 
 
