@@ -36,6 +36,8 @@ matcher = builder.build()
 return matcher.match(TEST PATH)
 ~~~
 
+NOTE: All paths passed in should be absolute. For example, `os.path.join(os.getcwd(), "README.MD")` can be used to specify a README.MD file in the current working directory.
+
 ## Example
 
 To walk through a directory and look at files that arent supposed to be ignored:
