@@ -60,5 +60,8 @@ for root, _, files in os.walk(directory):
 python -m unittest tests/test_gitignore.py
 ```
 
+### CONTRIBUTING
+Read [CONTRIBUTING](https://github.com/thehanimo/py-gitignore/blob/main/CONTRIBUTING)
+
 
 
