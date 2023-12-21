@@ -17,10 +17,16 @@ A python implementation of a gitignore file path matcher. Based on a .gitignore 
 
 ## Usage
 
-First, create the builder for adding .gitignore files
+First, install the package using pip
+
+`pip install py_gitignore_2`
+
+Then, create the builder for adding .gitignore files
 
 ~~~
-builder = Gitignorebuilder(DIRECTORY_ROOT) # add your root for the project
+from py_gitignore_2 import GitignoreBuilder
+
+builder = GitignoreBuilder(DIRECTORY_ROOT) # add your root for the project
 builder.add(GITIGNORE FILE PATH) # add your filepath to the gitignore file
 ~~~
 
@@ -33,7 +39,7 @@ return matcher.match(TEST PATH)
 
 ## Example
 
-Say im walking through a directory and want to only look at files that arent supposed to be ignored.
+To walk through a directory and look at files that arent supposed to be ignored:
 
 ~~~
 for root, _, files in os.walk(directory):     
@@ -45,7 +51,11 @@ for root, _, files in os.walk(directory):
             # If matcher returns True, the file is ignored
 ~~~
 
-### Unit testing
+
+
+### Development
+### Unit Testing
+
 ```sh
 python -m unittest tests/test_gitignore.py
 ```

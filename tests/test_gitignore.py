@@ -1,6 +1,6 @@
 import unittest
 import os
-from src import GitignoreBuilder
+from src.py_gitignore_2 import GitignoreBuilder
 
 class TestGitignoreMatcher(unittest.TestCase):
     @classmethod

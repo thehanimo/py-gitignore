@@ -1,3 +1,30 @@
+[project]
+name = "py_gitignore_2"
+version = "0.0.1"
+authors = [
+  { name="Hani Mohammed", email="hani.m17@iiits.in" },
+  { name="Anil Poonai", email="ap5254@nyu.edu" },
+  { name="Kishore Moorthy", email="ksm5985@nyu.edu" },
+  { name="Omar Hammami", email="oh524@nyu.edu" },
+  { name="Sean Balakhanei", email="sb7671@nyu.edu" },
+]
+description = "Python implementation of a gitignore parser and checker"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/thehanimo/py-gitignore"
+Issues = "https://github.com/thehanimo/py-gitignore/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [tool.black]
 line-length = 88
 include = 'src\/.*\.pyi?$'
