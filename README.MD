@@ -100,7 +100,7 @@ for root, _, files in os.walk(directory):
 8. **Push code on GitHub to run CI tests on GitHub Actions**
 
 ## CONTRIBUTING
-Read [CONTRIBUTING](https://github.com/thehanimo/py-gitignore/blob/main/CONTRIBUTING)
+Read [CONTRIBUTING.MD](https://github.com/thehanimo/py-gitignore/blob/main/CONTRIBUTING.MD)
 
 
 
